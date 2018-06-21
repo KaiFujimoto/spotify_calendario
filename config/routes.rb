@@ -1,3 +1,15 @@
 Rails.application.routes.draw do
+  get 'event/new'
+
+  get 'event/create'
+
+  get 'event/show'
+
+  get 'event/index'
+
+  get 'event/destroy'
+
+  get 'event/update'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
