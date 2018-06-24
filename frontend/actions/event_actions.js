@@ -1,4 +1,4 @@
-import * as EventUtil from '../util/event_util';
+import * as EventApiUtil from '../util/event_api_util';
 
 export const RECEIVE_ALL_EVENTS = 'RECEIVE_ALL_EVENTS';
 export const RECEIVE_EVENT = 'RECEIVE_EVENT';
@@ -11,7 +11,6 @@ export const clearErrors = () => ({
 });
 
 export const receiveAllEvents = event => {
-
   return ({
     type: RECEIVE_ALL_EVENTS,
     event
