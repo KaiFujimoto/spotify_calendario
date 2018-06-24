@@ -5,7 +5,7 @@ import eventsErrorsReducer from './events_errors_reducer';
 
 const rootReducer = combineReducers({
   events: eventsReducer,
-  eventErrors: eventErrorsReducer
+  eventErrors: eventsErrorsReducer
 });
 
 export default rootReducer;

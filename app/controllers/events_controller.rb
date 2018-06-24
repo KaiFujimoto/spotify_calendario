@@ -26,7 +26,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       render :show
     else
-      
+      render json: {errors: @post.errors.full_messages}, status: 422
     end
   end
 
