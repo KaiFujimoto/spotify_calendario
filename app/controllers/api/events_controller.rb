@@ -3,7 +3,7 @@ class Api::EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      render :show
+      render :index
     else
       render json: {errors: @event.errors.full_messages}, status: 422
     end
@@ -22,13 +22,13 @@ class Api::EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     @event.destroy!
-    render :show
+    render :index
   end
 
   def update
     @event = Event.find(params[:id])
     if @event.update(event_params)
-      render :show
+      render :index
     else
       render json: {errors: @event.errors.full_messages}, status: 422
     end
