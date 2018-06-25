@@ -8,8 +8,8 @@ function Modal({modal, props, closeModal}) {
     return null;
   }
   let component = null;
-  if (modal.type === 'edit' && modal.eventId === props.event.id) {
-      component = <CreateEventFormContainer event={props.event}/>;
+  if (modal.type === 'create') {
+      component = <CreateEventFormContainer event={props.event} day={modal.day}/>;
       return (
         <div className="modal-background" onClick={closeModal}>
           <div className="modal-child" onClick={e => e.stopPropagation()}>
@@ -24,7 +24,7 @@ function Modal({modal, props, closeModal}) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    modal: state.ui.modal,
+    modal: state.modal,
     props: ownProps
   };
 };

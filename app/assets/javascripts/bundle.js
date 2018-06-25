@@ -326,20 +326,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var EventForm = function (_React$Component) {
-  _inherits(EventForm, _React$Component);
+var CreateEventForm = function (_React$Component) {
+  _inherits(CreateEventForm, _React$Component);
 
-  function EventForm(props) {
-    _classCallCheck(this, EventForm);
+  function CreateEventForm(props) {
+    _classCallCheck(this, CreateEventForm);
 
-    var _this = _possibleConstructorReturn(this, (EventForm.__proto__ || Object.getPrototypeOf(EventForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CreateEventForm.__proto__ || Object.getPrototypeOf(CreateEventForm)).call(this, props));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
 
     return _this;
   }
 
-  _createClass(EventForm, [{
+  _createClass(CreateEventForm, [{
     key: 'eventAttributes',
     value: function eventAttributes() {
       var description = this.description.value;
@@ -468,10 +468,10 @@ var EventForm = function (_React$Component) {
     }
   }]);
 
-  return EventForm;
+  return CreateEventForm;
 }(_react2.default.Component);
 
-exports.default = EventForm;
+exports.default = CreateEventForm;
 
 /***/ }),
 
@@ -505,9 +505,10 @@ var _create_event_form2 = _interopRequireDefault(_create_event_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     type: 'Create',
+    day: ownProps.day,
     errors: state.eventErrors
   };
 };
@@ -565,8 +566,8 @@ function Modal(_ref) {
     return null;
   }
   var component = null;
-  if (modal.type === 'edit' && modal.eventId === props.event.id) {
-    component = _react2.default.createElement(_create_event_form_container2.default, { event: props.event });
+  if (modal.type === 'create') {
+    component = _react2.default.createElement(_create_event_form_container2.default, { event: props.event, day: modal.day });
     return _react2.default.createElement(
       'div',
       { className: 'modal-background', onClick: closeModal },
@@ -585,7 +586,7 @@ function Modal(_ref) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    modal: state.ui.modal,
+    modal: state.modal,
     props: ownProps
   };
 };
@@ -648,7 +649,10 @@ var EventIndex = function (_React$Component) {
   function EventIndex(props) {
     _classCallCheck(this, EventIndex);
 
-    return _possibleConstructorReturn(this, (EventIndex.__proto__ || Object.getPrototypeOf(EventIndex)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (EventIndex.__proto__ || Object.getPrototypeOf(EventIndex)).call(this, props));
+
+    _this.handleCreate = _this.handleCreate.bind(_this);
+    return _this;
   }
 
   _createClass(EventIndex, [{
@@ -657,8 +661,19 @@ var EventIndex = function (_React$Component) {
       this.props.fetchEvents();
     }
   }, {
+    key: 'grabDateInformation',
+    value: function grabDateInformation(year, day, month) {}
+  }, {
+    key: 'handleCreate',
+    value: function handleCreate(e) {
+      e.stopPropagation();
+      this.props.openModal({ type: 'create', day: e.currentTarget.id });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       // NOTE: IF I HAVE TIME I WILL REFACTOR THIS LOOKS TERRIBLE I KNOW
       if (this.props.events.length === 0) {
         return _react2.default.createElement('li', null);
@@ -725,7 +740,7 @@ var EventIndex = function (_React$Component) {
               { className: 'event-list-item', key: date.day.theDay },
               _react2.default.createElement(
                 'button',
-                null,
+                { id: date.day.theDay, onClick: _this2.handleCreate },
                 'Click To Add Event'
               ),
               _react2.default.createElement(
@@ -746,7 +761,7 @@ var EventIndex = function (_React$Component) {
               { className: 'event-list-item', key: date.day.theDay },
               _react2.default.createElement(
                 'button',
-                null,
+                { id: date.day.theDay, onClick: _this2.handleCreate },
                 'Click To Add Event'
               ),
               _react2.default.createElement(
@@ -769,7 +784,7 @@ var EventIndex = function (_React$Component) {
               { className: 'event-list-item', key: date.day.theDay },
               _react2.default.createElement(
                 'button',
-                null,
+                { id: date.day.theDay, onClick: _this2.handleCreate },
                 'Click To Add Event'
               ),
               _react2.default.createElement(
@@ -784,7 +799,7 @@ var EventIndex = function (_React$Component) {
               { className: 'event-list-item', key: date.day.theDay },
               _react2.default.createElement(
                 'button',
-                null,
+                { id: date.day.theDay, onClick: _this2.handleCreate },
                 'Click To Add Event'
               ),
               _react2.default.createElement(
@@ -817,7 +832,7 @@ var EventIndex = function (_React$Component) {
           ' ',
           year
         ),
-        _react2.default.createElement(_modal2.default, { event: this.props.event, eventHash: this.props.eventHash }),
+        _react2.default.createElement(_modal2.default, { event: events, eventHash: this.props.eventsHash }),
         _react2.default.createElement(
           'div',
           { className: 'events-list' },
@@ -873,6 +888,8 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _event_actions = __webpack_require__(/*! ../../actions/event_actions */ "./frontend/actions/event_actions.js");
 
+var _modal_actions = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 var _event_index = __webpack_require__(/*! ./event_index */ "./frontend/components/events/event_index.jsx");
 
 var _event_index2 = _interopRequireDefault(_event_index);
@@ -890,6 +907,12 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchEvents: function fetchEvents() {
       return dispatch((0, _event_actions.fetchEvents)());
+    },
+    openModal: function openModal(modal) {
+      return dispatch((0, _modal_actions.openModal)(modal));
+    },
+    closeModal: function closeModal() {
+      return dispatch((0, _modal_actions.closeModal)());
     }
   };
 };
@@ -1081,6 +1104,39 @@ exports.default = eventReducer;
 
 /***/ }),
 
+/***/ "./frontend/reducers/modal_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/modal_reducer.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = modalReducer;
+
+var _modal_actions = __webpack_require__(/*! ../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+function modalReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _modal_actions.OPEN_MODAL:
+      return action.modal;
+    case _modal_actions.CLOSE_MODAL:
+      return null;
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./frontend/reducers/root_reducer.js":
 /*!*******************************************!*\
   !*** ./frontend/reducers/root_reducer.js ***!
@@ -1105,11 +1161,16 @@ var _events_errors_reducer = __webpack_require__(/*! ./events_errors_reducer */ 
 
 var _events_errors_reducer2 = _interopRequireDefault(_events_errors_reducer);
 
+var _modal_reducer = __webpack_require__(/*! ./modal_reducer.js */ "./frontend/reducers/modal_reducer.js");
+
+var _modal_reducer2 = _interopRequireDefault(_modal_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
   events: _events_reducer2.default,
-  eventErrors: _events_errors_reducer2.default
+  eventErrors: _events_errors_reducer2.default,
+  modal: _modal_reducer2.default
 });
 
 exports.default = rootReducer;
@@ -1328,7 +1389,7 @@ var createEvent = exports.createEvent = function createEvent(data) {
     url: '/api/events',
     method: 'POST',
     data: {
-      data: data
+      event: data
     }
   });
 };

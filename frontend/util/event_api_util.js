@@ -17,7 +17,7 @@ export const createEvent = (data) => {
     url: '/api/events',
     method: 'POST',
     data: {
-      data
+      event: data
     }
   });
 };

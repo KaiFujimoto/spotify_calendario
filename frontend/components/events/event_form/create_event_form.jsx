@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { days, monthsList, years } from '../../../util/date_util';
 import { merge } from 'lodash';
 
-class EventForm extends React.Component {
+class CreateEventForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -92,4 +92,4 @@ class EventForm extends React.Component {
   }
 }
 
-export default EventForm;
+export default CreateEventForm;

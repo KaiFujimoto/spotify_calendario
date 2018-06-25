@@ -7,10 +7,20 @@ import Modal from './event_form/modal';
 class EventIndex extends React.Component {
   constructor(props) {
     super(props);
+    this.handleCreate = this.handleCreate.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchEvents();
+  }
+
+  grabDateInformation(year, day, month) {
+
+  }
+
+  handleCreate(e) {
+    e.stopPropagation();
+    this.props.openModal({type: 'create', day: e.currentTarget.id});
   }
 
   render() {
@@ -77,7 +87,7 @@ class EventIndex extends React.Component {
         if (date.day.theDay <= 7) {
           return (
             <div className = "event-list-item" key={date.day.theDay}>
-              <button>Click To Add Event</button>
+              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
               <div className = "date-number">{date.day.theDay}</div>
               <div>description: {eventsHash[hashOfEventDays[stringifiedDay]].description}</div>
             </div>
@@ -85,7 +95,7 @@ class EventIndex extends React.Component {
         } else {
           return (
             <div className = "event-list-item" key={date.day.theDay}>
-              <button>Click To Add Event</button>
+              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
               <div className = "date-number">{date.day.theDay}</div>
               <div>description: {eventsHash[hashOfEventDays[stringifiedDay]].description}</div>
             </div>
@@ -95,14 +105,14 @@ class EventIndex extends React.Component {
         if (date.day.theDay <= 7) {
           return (
             <div className = "event-list-item" key={date.day.theDay}>
-              <button>Click To Add Event</button>
+              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
               <div className = "date-number">{date.day.theDay}</div>
             </div>
           );
         } else {
           return (
             <div className = "event-list-item" key={date.day.theDay}>
-              <button>Click To Add Event</button>
+              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
               <div className = "date-number">{date.day.theDay}</div>
             </div>
           );
@@ -119,7 +129,7 @@ class EventIndex extends React.Component {
     return (
       <div>
         <h1 className = "events-list">{monthName} {year}</h1>
-        <Modal event={this.props.event} eventHash={this.props.eventHash}/>
+        <Modal event={events} eventHash={this.props.eventsHash}/>
         <div className = "events-list">
           <div className = "day-of-the-week-names">
             {daysOfWeekNamesArray}
