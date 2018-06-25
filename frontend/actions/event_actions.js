@@ -10,10 +10,10 @@ export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
 
-export const receiveAllEvents = event => {
+export const receiveAllEvents = events => {
   return ({
     type: RECEIVE_ALL_EVENTS,
-    event
+    events
   });
 };
 
@@ -38,9 +38,9 @@ export const receiveEventErrors = (errors) => {
   });
 };
 
-export const fetchEvents = (userId) => {
+export const fetchEvents = () => {
   return dispatch => {
-    return EventsApiUtil.fetchEvents(userId).then(event => {
+    return EventApiUtil.fetchEvents().then(event => {
       dispatch(receiveAllEvents(event));
     }, err => {
       return (
@@ -52,7 +52,7 @@ export const fetchEvents = (userId) => {
 
 export const fetchEvent = (eventId) => {
   return dispatch => {
-    return EventsApiUtil.fetchEvent(eventId).then(event => {
+    return EventApiUtil.fetchEvent(eventId).then(event => {
       dispatch(receiveEvent(event));
     }, err => {
         dispatch(receiveEventErrors(err.responseJSON));
@@ -63,7 +63,7 @@ export const fetchEvent = (eventId) => {
 export const createEvent = (data) => {
 
   return dispatch => {
-    return EventsApiUtil.createEvent(data).then(event => {
+    return EventApiUtil.createEvent(data).then(event => {
       dispatch(receiveEvent(event));
     }, err => {
       return (
@@ -75,7 +75,7 @@ export const createEvent = (data) => {
 
 export const updateEvent = (eventId) => {
   return dispatch => {
-    return EventsApiUtil.updateEvent(eventId).then(event => {
+    return EventApiUtil.updateEvent(eventId).then(event => {
       dispatch(receiveEvent(event));
     }, err => {
       dispatch(receiveEventErrors(err.responseJSON));
@@ -86,7 +86,7 @@ export const updateEvent = (eventId) => {
 export const deleteEvent = (eventId) => {
   return dispatch => {
 
-    return EventsApiUtil.deleteEvent(eventId).then((event) => {
+    return EventApiUtil.deleteEvent(eventId).then((event) => {
       dispatch(removeEvent(event.id));
     });
   };
