@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import EventIndexItem from './event_index_item';
 import { monthGenerator } from '../../util/date_util';
+import Modal from './event_form/modal';
 
 class EventIndex extends React.Component {
   constructor(props) {
@@ -118,6 +119,7 @@ class EventIndex extends React.Component {
     return (
       <div>
         <h1 className = "events-list">{monthName} {year}</h1>
+        <Modal event={this.props.event} eventHash={this.props.eventHash}/>
         <div className = "events-list">
           <div className = "day-of-the-week-names">
             {daysOfWeekNamesArray}
