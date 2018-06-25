@@ -16,29 +16,50 @@ class EventIndex extends React.Component {
     if (this.props.events.length === 0) {
       return <li></li>;
     }
+
     const events = this.props.events;
+    const eventsHash = this.props.eventsHash;
     const monthName = "June";
     const year = "2018";
     const months = monthGenerator(monthName, year);
     const daysWithEvents = events.map((event) => {
       return event.start_date.slice(8,10);
     });
-    debugger
+    const hashOfEventDays = {};
+
+    events.forEach((event) => {
+      hashOfEventDays[event.start_date.slice(8,10)] = event.id;
+    });
+
     const monthsList = months.map((date) => {
-      debugger
+      const stringifiedDay = date.day.theDay.toString();
       // i want to match the month and see if the month is in my days with events thing.
-      return (
-        <div key={date.day.theDay}>
-          <div>day of the week: {date.day.dayOfTheWeek}</div>
-          <div>month: {date.day.theMonth}</div>
-          <div>day: {date.day.theDay}</div>
-        </div>
-      );
+      if (daysWithEvents.includes(stringifiedDay)) {
+
+        return (
+          <div className = "event-list-item" key={date.day.theDay}>
+            <div>day of the week: {date.day.dayOfTheWeek}</div>
+            <div>month: {date.day.theMonth}</div>
+            <div>day: {date.day.theDay}</div>
+            <div>description: {eventsHash[hashOfEventDays[stringifiedDay]].description}</div>
+          </div>
+        );
+      } else {
+        return (
+          <div className = "event-list-item" key={date.day.theDay}>
+            <div>day of the week: {date.day.dayOfTheWeek}</div>
+            <div>month: {date.day.theMonth}</div>
+            <div>day: {date.day.theDay}</div>
+          </div>
+        );
+      }
     });
     return (
       <div>
-        <div>{year}</div>
-        {monthsList}
+        <h1>{year}</h1>
+        <div className = "events-list">
+          {monthsList}
+        </div>
       </div>
     );
   }

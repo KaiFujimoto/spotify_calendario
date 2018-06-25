@@ -8,6 +8,7 @@ import EventIndex from './event_index';
 const mapStateToProps = (state, ownProps) => {
   return ({
     events: Object.values(state.events),
+    eventsHash: state.events
   });
 };
 

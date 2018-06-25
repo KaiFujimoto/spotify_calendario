@@ -300,49 +300,92 @@ var EventIndex = function (_React$Component) {
       if (this.props.events.length === 0) {
         return _react2.default.createElement('li', null);
       }
+
       var events = this.props.events;
+      var eventsHash = this.props.eventsHash;
       var monthName = "June";
       var year = "2018";
       var months = (0, _date_util.monthGenerator)(monthName, year);
       var daysWithEvents = events.map(function (event) {
         return event.start_date.slice(8, 10);
       });
-      debugger;
+      var hashOfEventDays = {};
+
+      events.forEach(function (event) {
+        hashOfEventDays[event.start_date.slice(8, 10)] = event.id;
+      });
+
       var monthsList = months.map(function (date) {
-        debugger;
+        var stringifiedDay = date.day.theDay.toString();
         // i want to match the month and see if the month is in my days with events thing.
-        return _react2.default.createElement(
-          'div',
-          { key: date.day.theDay },
-          _react2.default.createElement(
+        if (daysWithEvents.includes(stringifiedDay)) {
+
+          return _react2.default.createElement(
             'div',
-            null,
-            'day of the week: ',
-            date.day.dayOfTheWeek
-          ),
-          _react2.default.createElement(
+            { className: 'event-list-item', key: date.day.theDay },
+            _react2.default.createElement(
+              'div',
+              null,
+              'day of the week: ',
+              date.day.dayOfTheWeek
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'month: ',
+              date.day.theMonth
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'day: ',
+              date.day.theDay
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'description: ',
+              eventsHash[hashOfEventDays[stringifiedDay]].description
+            )
+          );
+        } else {
+          return _react2.default.createElement(
             'div',
-            null,
-            'month: ',
-            date.day.theMonth
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            'day: ',
-            date.day.theDay
-          )
-        );
+            { className: 'event-list-item', key: date.day.theDay },
+            _react2.default.createElement(
+              'div',
+              null,
+              'day of the week: ',
+              date.day.dayOfTheWeek
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'month: ',
+              date.day.theMonth
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              'day: ',
+              date.day.theDay
+            )
+          );
+        }
       });
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          'div',
+          'h1',
           null,
           year
         ),
-        monthsList
+        _react2.default.createElement(
+          'div',
+          { className: 'events-list' },
+          monthsList
+        )
       );
     }
   }]);
@@ -396,7 +439,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    events: Object.values(state.events)
+    events: Object.values(state.events),
+    eventsHash: state.events
   };
 };
 
