@@ -52,8 +52,8 @@ export const months = {
 
 import React from 'react';
 
-export const years = [
-  2018
+export const timeOfDay = [
+  "am", "pm"
 ].map( year => {
   return (
     <option key={year} value={year}>{year}</option>
@@ -61,11 +61,8 @@ export const years = [
   }
 );
 
-export const days = [
-  1, 2,	3, 4,	5,	6,	7,	8,	9,
-  10,	11,	12,	13,	14,	15,	16,	17,	18,	19,
-  20,	21,	22,	23,	24,	25,	26,	27,	28,	29,
-  30,	31
+export const minutes = [
+  "00", "15", "30", "45"
 ].map( day => {
   return (
     <option key={day} value={day}>{day}</option>
@@ -74,17 +71,48 @@ export const days = [
 );
 
 
-export const monthsList = [
-  <option key={1} value={1}>Jan</option>,
-  <option key={2} value={2}>Feb</option>,
-  <option key={3} value={3}>Mar</option>,
-  <option key={4} value={4}>Apr</option>,
-  <option key={5} value={5}>May</option>,
-  <option key={6} value={6}>June</option>,
-  <option key={7} value={7}>July</option>,
-  <option key={8} value={8}>Aug</option>,
-  <option key={9} value={9}>Sept</option>,
-  <option key={10} value={10}>Oct</option>,
-  <option key={11} value={11}>Nov</option>,
-  <option key={12} value={12}>Dec</option>
+export const hours = [
+  <option key={1} value={1}>"01"</option>,
+  <option key={2} value={2}>"02"</option>,
+  <option key={3} value={3}>"03"</option>,
+  <option key={4} value={4}>"04"</option>,
+  <option key={5} value={5}>"05"</option>,
+  <option key={6} value={6}>"06"</option>,
+  <option key={7} value={7}>"07"</option>,
+  <option key={8} value={8}>"08"</option>,
+  <option key={9} value={9}>"09"</option>,
+  <option key={10} value={10}>"10"</option>,
+  <option key={11} value={11}>"11"</option>,
+  <option key={12} value={12}>"12"</option>
 ];
+
+export const timeGenerator = (string) => {
+  switch (string.slice(0,2)) {
+    case "0:":
+      return `12:${string.slice(2, string.length)}` + ' ' + 'a.m';
+    case "13":
+      return `01${string.slice(2, string.length)}` + ' ' + 'p.m.';
+    case "14":
+      return `02${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "15":
+      return `03${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "16":
+      return `04${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "17":
+      return `05${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "18":
+      return `06${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "19":
+      return `07${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "20":
+      return `08${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "21":
+      return `09${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "22":
+      return `10${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    case "23":
+      return `11${string.slice(2, string.length)}`+ ' ' + 'p.m.';
+    default:
+      return string + 'a.m.';
+  }
+};

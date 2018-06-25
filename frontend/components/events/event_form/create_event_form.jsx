@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { days, monthsList, years } from '../../../util/date_util';
+import { hours, minutes, timeOfDay } from '../../../util/date_util';
 import { merge } from 'lodash';
 
 class CreateEventForm extends React.Component {
@@ -12,10 +12,15 @@ class CreateEventForm extends React.Component {
 
   eventAttributes() {
     const description = this.description.value;
-    const start_date = this.year.value + "-" +
-                this.month.value + "-" +
-                this.day.value;
-    const end_date = this.year.value + "-" + this.month.value + "-" + this.day.value;
+    if (this.timeOfDay.value === "pm") {
+      this.hours.value = (parseInt(this.hours.value) + 12).toString();
+    }
+    const start_date = `2018-06-${this.props.day}` + "T" + this.hours.value + ":" +
+                this.minutes.value + ":" +
+                "00";
+    const end_date =  `2018-06-${this.props.day}` + "T" + this.hours.value + ":" +
+                this.minutes.value + ":" +
+                "00";
     return { description, start_date, end_date };
   }
 
@@ -63,22 +68,40 @@ class CreateEventForm extends React.Component {
           </div>
           <ul className="other-half-of-form">
             <li>
-              <h5>Event Date</h5>
+              <h5>Start Time</h5>
+              <ul className="sign-up-form-birthdays">
+                <select
+                  defaultValue='hours'
+                  ref={input => this.hours = input}>
+                  {hours}
+                </select>
+                <select
+                  defaultValue='minutes'
+                  ref={input => this.minutes = input}>
+                  {minutes}
+                </select>
+                <select
+                  defaultValue='am/pm'
+                  ref={input => this.timeOfDay = input}>
+                  {timeOfDay}
+                </select>
+              </ul>
+              <h5>End Time</h5>
               <ul className="sign-up-form-birthdays">
                   <select
-                    defaultValue='month'
-                    ref={input => this.month = input}>
-                    {monthsList}
+                    defaultValue='hours'
+                    ref={input => this.hours = input}>
+                    {hours}
                   </select>
                   <select
-                    defaultValue='day'
-                    ref={input => this.day = input}>
-                    {days}
+                    defaultValue='minutes'
+                    ref={input => this.minutes = input}>
+                    {minutes}
                   </select>
                   <select
-                    defaultValue='year'
-                    ref={input => this.year = input}>
-                    {years}
+                    defaultValue='am/pm'
+                    ref={input => this.timeOfDay = input}>
+                    {timeOfDay}
                   </select>
               </ul>
               <button className='sign-up-button' onClick={this.handleSubmit}>Create Event</button>

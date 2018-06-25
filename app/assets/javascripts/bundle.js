@@ -343,8 +343,11 @@ var CreateEventForm = function (_React$Component) {
     key: 'eventAttributes',
     value: function eventAttributes() {
       var description = this.description.value;
-      var start_date = this.year.value + "-" + this.month.value + "-" + this.day.value;
-      var end_date = this.year.value + "-" + this.month.value + "-" + this.day.value;
+      if (this.timeOfDay.value === "pm") {
+        this.hours.value = (parseInt(this.hours.value) + 12).toString();
+      }
+      var start_date = '2018-06-' + this.props.day + "T" + this.hours.value + ":" + this.minutes.value + ":" + "00";
+      var end_date = '2018-06-' + this.props.day + "T" + this.hours.value + ":" + this.minutes.value + ":" + "00";
       return { description: description, start_date: start_date, end_date: end_date };
     }
   }, {
@@ -419,7 +422,7 @@ var CreateEventForm = function (_React$Component) {
               _react2.default.createElement(
                 'h5',
                 null,
-                'Event Date'
+                'Start Time'
               ),
               _react2.default.createElement(
                 'ul',
@@ -427,29 +430,65 @@ var CreateEventForm = function (_React$Component) {
                 _react2.default.createElement(
                   'select',
                   {
-                    defaultValue: 'month',
+                    defaultValue: 'hours',
                     ref: function ref(input) {
-                      return _this3.month = input;
+                      return _this3.hours = input;
                     } },
-                  _date_util.monthsList
+                  _date_util.hours
                 ),
                 _react2.default.createElement(
                   'select',
                   {
-                    defaultValue: 'day',
+                    defaultValue: 'minutes',
                     ref: function ref(input) {
-                      return _this3.day = input;
+                      return _this3.minutes = input;
                     } },
-                  _date_util.days
+                  _date_util.minutes
                 ),
                 _react2.default.createElement(
                   'select',
                   {
-                    defaultValue: 'year',
+                    defaultValue: 'am/pm',
                     ref: function ref(input) {
-                      return _this3.year = input;
+                      return _this3.timeOfDay = input;
                     } },
-                  _date_util.years
+                  _date_util.timeOfDay
+                )
+              ),
+              _react2.default.createElement(
+                'h5',
+                null,
+                'End Time'
+              ),
+              _react2.default.createElement(
+                'ul',
+                { className: 'sign-up-form-birthdays' },
+                _react2.default.createElement(
+                  'select',
+                  {
+                    defaultValue: 'hours',
+                    ref: function ref(input) {
+                      return _this3.hours = input;
+                    } },
+                  _date_util.hours
+                ),
+                _react2.default.createElement(
+                  'select',
+                  {
+                    defaultValue: 'minutes',
+                    ref: function ref(input) {
+                      return _this3.minutes = input;
+                    } },
+                  _date_util.minutes
+                ),
+                _react2.default.createElement(
+                  'select',
+                  {
+                    defaultValue: 'am/pm',
+                    ref: function ref(input) {
+                      return _this3.timeOfDay = input;
+                    } },
+                  _date_util.timeOfDay
                 )
               ),
               _react2.default.createElement(
@@ -658,6 +697,7 @@ var EventIndex = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (EventIndex.__proto__ || Object.getPrototypeOf(EventIndex)).call(this, props));
 
     _this.handleCreate = _this.handleCreate.bind(_this);
+    // this.iterateThroughEvents = this.iterateThroughEvents.bind(this);
     return _this;
   }
 
@@ -667,14 +707,14 @@ var EventIndex = function (_React$Component) {
       this.props.fetchEvents();
     }
   }, {
-    key: 'grabDateInformation',
-    value: function grabDateInformation(year, day, month) {}
-  }, {
     key: 'handleCreate',
     value: function handleCreate(e) {
       e.stopPropagation();
       this.props.openModal({ type: 'create', day: e.currentTarget.id });
     }
+  }, {
+    key: 'iterateThroughEvents',
+    value: function iterateThroughEvents(eventsHash, hashOfEventDays, stringifiedDay) {}
   }, {
     key: 'render',
     value: function render() {
@@ -691,12 +731,22 @@ var EventIndex = function (_React$Component) {
       var year = "2018";
       var months = (0, _date_util.monthGenerator)(monthName, year);
       var daysWithEvents = events.map(function (event) {
-        return event.start_date.slice(8, 10);
+        if (event.start_date.slice(5, 7) === MONTH_NUMBERS[monthName]) {
+          return event.start_date.slice(8, 10);
+        } else {
+          return "100";
+        }
       });
       var hashOfEventDays = {};
-
       events.forEach(function (event) {
-        hashOfEventDays[event.start_date.slice(8, 10)] = event.id;
+        if (event.start_date.slice(5, 7) === MONTH_NUMBERS[monthName]) {
+          if (hashOfEventDays[event.start_date.slice(8, 10)] === undefined) {
+            hashOfEventDays[event.start_date.slice(8, 10)] = [];
+            hashOfEventDays[event.start_date.slice(8, 10)].push(event.id);
+          } else {
+            hashOfEventDays[event.start_date.slice(8, 10)].push(event.id);
+          }
+        }
       });
 
       var daysOfWeekNames = {
@@ -711,6 +761,9 @@ var EventIndex = function (_React$Component) {
 
       var monthsList = months.map(function (date) {
         var stringifiedDay = date.day.theDay.toString();
+        if (stringifiedDay.length < 2) {
+          stringifiedDay = "0" + stringifiedDay;
+        }
         if (date.day.theDay <= 7) {
           switch (date.day.theDay) {
             case 1:
@@ -740,6 +793,16 @@ var EventIndex = function (_React$Component) {
         }
         if (daysWithEvents.includes(stringifiedDay)) {
           // i just want the weekdays for the first 7 everything else should fall in line
+          var description = hashOfEventDays[stringifiedDay].map(function (id) {
+            return _react2.default.createElement(
+              'div',
+              { key: id },
+              'task: ',
+              eventsHash[id].description,
+              ' start_time: ',
+              (0, _date_util.timeGenerator)(eventsHash[id].start_date.slice(12, 16))
+            );
+          });
           if (date.day.theDay <= 7) {
             return _react2.default.createElement(
               'div',
@@ -757,8 +820,7 @@ var EventIndex = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 null,
-                'description: ',
-                eventsHash[hashOfEventDays[stringifiedDay]].description
+                description
               )
             );
           } else {
@@ -778,8 +840,7 @@ var EventIndex = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 null,
-                'description: ',
-                eventsHash[hashOfEventDays[stringifiedDay]].description
+                description
               )
             );
           }
@@ -867,6 +928,21 @@ exports.default = EventIndex;
 //     />
 //   );
 // });
+
+var MONTH_NUMBERS = {
+  "January": "01",
+  "February": "02",
+  "March": "03",
+  "April": "04",
+  "May": "05",
+  "June": "06",
+  "July": "07",
+  "August": "08",
+  "Septempber": "09",
+  "October": "10",
+  "November": "11",
+  "December": "12"
+};
 
 /***/ }),
 
@@ -1235,7 +1311,7 @@ exports.default = configureStore;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.monthsList = exports.days = exports.years = exports.months = exports.weekDays = exports.monthGenerator = undefined;
+exports.timeGenerator = exports.hours = exports.minutes = exports.timeOfDay = exports.months = exports.weekDays = exports.monthGenerator = undefined;
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
@@ -1295,7 +1371,7 @@ var months = exports.months = {
   11: "December"
 };
 
-var years = exports.years = [2018].map(function (year) {
+var timeOfDay = exports.timeOfDay = ["am", "pm"].map(function (year) {
   return _react2.default.createElement(
     "option",
     { key: year, value: year },
@@ -1303,7 +1379,7 @@ var years = exports.years = [2018].map(function (year) {
   );
 });
 
-var days = exports.days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31].map(function (day) {
+var minutes = exports.minutes = ["00", "15", "30", "45"].map(function (day) {
   return _react2.default.createElement(
     "option",
     { key: day, value: day },
@@ -1311,55 +1387,86 @@ var days = exports.days = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
   );
 });
 
-var monthsList = exports.monthsList = [_react2.default.createElement(
+var hours = exports.hours = [_react2.default.createElement(
   "option",
   { key: 1, value: 1 },
-  "Jan"
+  "\"01\""
 ), _react2.default.createElement(
   "option",
   { key: 2, value: 2 },
-  "Feb"
+  "\"02\""
 ), _react2.default.createElement(
   "option",
   { key: 3, value: 3 },
-  "Mar"
+  "\"03\""
 ), _react2.default.createElement(
   "option",
   { key: 4, value: 4 },
-  "Apr"
+  "\"04\""
 ), _react2.default.createElement(
   "option",
   { key: 5, value: 5 },
-  "May"
+  "\"05\""
 ), _react2.default.createElement(
   "option",
   { key: 6, value: 6 },
-  "June"
+  "\"06\""
 ), _react2.default.createElement(
   "option",
   { key: 7, value: 7 },
-  "July"
+  "\"07\""
 ), _react2.default.createElement(
   "option",
   { key: 8, value: 8 },
-  "Aug"
+  "\"08\""
 ), _react2.default.createElement(
   "option",
   { key: 9, value: 9 },
-  "Sept"
+  "\"09\""
 ), _react2.default.createElement(
   "option",
   { key: 10, value: 10 },
-  "Oct"
+  "\"10\""
 ), _react2.default.createElement(
   "option",
   { key: 11, value: 11 },
-  "Nov"
+  "\"11\""
 ), _react2.default.createElement(
   "option",
   { key: 12, value: 12 },
-  "Dec"
+  "\"12\""
 )];
+
+var timeGenerator = exports.timeGenerator = function timeGenerator(string) {
+  switch (string.slice(0, 2)) {
+    case "0:":
+      return "12:" + string.slice(2, string.length) + ' ' + 'a.m';
+    case "13":
+      return "01" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "14":
+      return "02" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "15":
+      return "03" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "16":
+      return "04" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "17":
+      return "05" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "18":
+      return "06" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "19":
+      return "07" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "20":
+      return "08" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "21":
+      return "09" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "22":
+      return "10" + string.slice(2, string.length) + ' ' + 'p.m.';
+    case "23":
+      return "11" + string.slice(2, string.length) + ' ' + 'p.m.';
+    default:
+      return string + 'a.m.';
+  }
+};
 
 /***/ }),
 
