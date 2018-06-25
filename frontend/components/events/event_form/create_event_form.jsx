@@ -24,6 +24,7 @@ class CreateEventForm extends React.Component {
     const event = this.eventAttributes();
     this.props.createEvent(event).then(() => {
       this.props.clearErrors();
+      this.props.closeModal();
     });
   }
 

@@ -356,6 +356,7 @@ var CreateEventForm = function (_React$Component) {
       var event = this.eventAttributes();
       this.props.createEvent(event).then(function () {
         _this2.props.clearErrors();
+        _this2.props.closeModal();
       });
     }
   }, {
@@ -497,6 +498,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _event_actions = __webpack_require__(/*! ../../../actions/event_actions */ "./frontend/actions/event_actions.js");
 
+var _modal_actions = __webpack_require__(/*! ../../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
 var _create_event_form = __webpack_require__(/*! ./create_event_form */ "./frontend/components/events/event_form/create_event_form.jsx");
@@ -521,6 +524,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch((0, _event_actions.clearErrors)());
+    },
+    closeModal: function closeModal() {
+      return dispatch((0, _modal_actions.closeModal)());
     }
   };
 };

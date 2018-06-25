@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { createEvent, clearErrors } from '../../../actions/event_actions';
+import {closeModal} from '../../../actions/modal_actions';
 import { withRouter } from 'react-router-dom';
 
 import CreateEventForm from './create_event_form';
@@ -17,7 +18,8 @@ const mapDispatchToProps = dispatch => {
 
   return ({
     createEvent: (data) => dispatch(createEvent(data)),
-    clearErrors: () => dispatch(clearErrors())
+    clearErrors: () => dispatch(clearErrors()),
+    closeModal: () => dispatch(closeModal())
   });
 };
 
