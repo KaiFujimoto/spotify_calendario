@@ -61,7 +61,6 @@ export const fetchEvent = (eventId) => {
 };
 
 export const createEvent = (data) => {
-
   return dispatch => {
     return EventApiUtil.createEvent(data).then(event => {
       dispatch(receiveEvent(event));

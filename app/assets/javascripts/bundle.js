@@ -168,7 +168,6 @@ var fetchEvent = exports.fetchEvent = function fetchEvent(eventId) {
 };
 
 var createEvent = exports.createEvent = function createEvent(data) {
-
   return function (dispatch) {
     return EventApiUtil.createEvent(data).then(function (event) {
       dispatch(receiveEvent(event));
@@ -232,11 +231,29 @@ var App = function App() {
     'div',
     null,
     _react2.default.createElement(
+      'div',
+      { className: 'user' },
+      _react2.default.createElement(
+        'div',
+        null,
+        'Welcome!'
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        'Charlie Brown'
+      )
+    ),
+    _react2.default.createElement(
       'h1',
-      null,
+      { className: 'heading' },
       'Spotify Calendario'
     ),
-    _react2.default.createElement(_event_index_container2.default, null)
+    _react2.default.createElement(
+      'div',
+      { className: 'calendar' },
+      _react2.default.createElement(_event_index_container2.default, null)
+    )
   );
 };
 
@@ -297,6 +314,7 @@ var EventIndex = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      // NOTE: IF I HAVE TIME I WILL REFACTOR THIS LOOKS TERRIBLE I KNOW
       if (this.props.events.length === 0) {
         return _react2.default.createElement('li', null);
       }
@@ -315,75 +333,153 @@ var EventIndex = function (_React$Component) {
         hashOfEventDays[event.start_date.slice(8, 10)] = event.id;
       });
 
+      var daysOfWeekNames = {
+        firstDay: null,
+        secondDay: null,
+        thirdDay: null,
+        fourthDay: null,
+        fifthDay: null,
+        sixthDay: null,
+        seventhDay: null
+      };
+
       var monthsList = months.map(function (date) {
         var stringifiedDay = date.day.theDay.toString();
-        // i want to match the month and see if the month is in my days with events thing.
-        if (daysWithEvents.includes(stringifiedDay)) {
+        if (date.day.theDay <= 7) {
+          switch (date.day.theDay) {
+            case 1:
+              daysOfWeekNames.firstDay = date.day.dayOfTheWeek;
+              break;
+            case 2:
+              daysOfWeekNames.secondDay = date.day.dayOfTheWeek;
+              break;
+            case 3:
+              daysOfWeekNames.thirdDay = date.day.dayOfTheWeek;
+              break;
+            case 4:
+              daysOfWeekNames.fourthDay = date.day.dayOfTheWeek;
+              break;
+            case 5:
+              daysOfWeekNames.fifthDay = date.day.dayOfTheWeek;
+              break;
+            case 6:
+              daysOfWeekNames.sixthDay = date.day.dayOfTheWeek;
+              break;
+            case 7:
+              daysOfWeekNames.seventhDay = date.day.dayOfTheWeek;
+              break;
+            default:
 
-          return _react2.default.createElement(
-            'div',
-            { className: 'event-list-item', key: date.day.theDay },
-            _react2.default.createElement(
-              'div',
-              null,
-              'day of the week: ',
-              date.day.dayOfTheWeek
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'month: ',
-              date.day.theMonth
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'day: ',
-              date.day.theDay
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'description: ',
-              eventsHash[hashOfEventDays[stringifiedDay]].description
-            )
-          );
-        } else {
-          return _react2.default.createElement(
-            'div',
-            { className: 'event-list-item', key: date.day.theDay },
-            _react2.default.createElement(
-              'div',
-              null,
-              'day of the week: ',
-              date.day.dayOfTheWeek
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'month: ',
-              date.day.theMonth
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'day: ',
-              date.day.theDay
-            )
-          );
+          }
         }
+        if (daysWithEvents.includes(stringifiedDay)) {
+          // i just want the weekdays for the first 7 everything else should fall in line
+          if (date.day.theDay <= 7) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'event-list-item', key: date.day.theDay },
+              _react2.default.createElement(
+                'button',
+                null,
+                'Click To Add Event'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'date-number' },
+                date.day.theDay
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'description: ',
+                eventsHash[hashOfEventDays[stringifiedDay]].description
+              )
+            );
+          } else {
+            return _react2.default.createElement(
+              'div',
+              { className: 'event-list-item', key: date.day.theDay },
+              _react2.default.createElement(
+                'button',
+                null,
+                'Click To Add Event'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'date-number' },
+                date.day.theDay
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'description: ',
+                eventsHash[hashOfEventDays[stringifiedDay]].description
+              )
+            );
+          }
+        } else {
+          if (date.day.theDay <= 7) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'event-list-item', key: date.day.theDay },
+              _react2.default.createElement(
+                'button',
+                null,
+                'Click To Add Event'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'date-number' },
+                date.day.theDay
+              )
+            );
+          } else {
+            return _react2.default.createElement(
+              'div',
+              { className: 'event-list-item', key: date.day.theDay },
+              _react2.default.createElement(
+                'button',
+                null,
+                'Click To Add Event'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'date-number' },
+                date.day.theDay
+              )
+            );
+          }
+        }
+      });
+      var daysOfWeekNamesArray = Object.values(daysOfWeekNames).map(function (name) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'specific-date-name', key: name },
+          _react2.default.createElement(
+            'div',
+            null,
+            name
+          )
+        );
       });
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'h1',
-          null,
+          { className: 'events-list' },
+          monthName,
+          ' ',
           year
         ),
         _react2.default.createElement(
           'div',
           { className: 'events-list' },
+          _react2.default.createElement(
+            'div',
+            { className: 'day-of-the-week-names' },
+            daysOfWeekNamesArray
+          ),
           monthsList
         )
       );

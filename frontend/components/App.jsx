@@ -11,8 +11,14 @@ import EventIndexContainer from './events/event_index_container';
 
 const App = () => (
   <div>
-    <h1>Spotify Calendario</h1>
-    <EventIndexContainer />
+    <div className = "user">
+      <div>Welcome!</div>
+      <div>Charlie Brown</div>
+    </div>
+    <h1 className = "heading">Spotify Calendario</h1>
+    <div className = "calendar">
+      <EventIndexContainer />
+    </div>
   </div>
 );
 
