@@ -187,4 +187,4 @@ const MONTH_NUMBERS = {
   "October": "10",
   "November": "11",
   "December": "12"
-}
+};
