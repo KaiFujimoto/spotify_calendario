@@ -42,7 +42,7 @@ class CreateEventForm extends React.Component {
 
   renderErrors() {
     return(
-      <ul className='sign-up-errors'>
+      <ul className='create-errors'>
         {this.props.errors.errors.map( (error, idx) => {
           return (
               <li key={idx}>
@@ -56,10 +56,10 @@ class CreateEventForm extends React.Component {
 
   render() {
     return (
-      <div className="sign-up-form">
+      <div className="create-form">
         <h1>{this.props.type} Event</h1>
-        <form className="sign-up-form-form" onSubmit={this.handleSubmit}>
-          <div className="sign-up-form-names">
+        <form className="create-form-form" onSubmit={this.handleSubmit}>
+          <div className="create-form-description">
               <input
                 ref={(input) => this.description = input }
                 placeholder="Description"
@@ -69,7 +69,7 @@ class CreateEventForm extends React.Component {
           <ul className="other-half-of-form">
             <li>
               <h5>Start Time</h5>
-              <ul className="sign-up-form-birthdays">
+              <ul className="create-form-hours">
                 <select
                   defaultValue='hours'
                   ref={input => this.hours = input}>
@@ -87,7 +87,7 @@ class CreateEventForm extends React.Component {
                 </select>
               </ul>
               <h5>End Time</h5>
-              <ul className="sign-up-form-birthdays">
+              <ul className="create-form-hours">
                   <select
                     defaultValue='hours'
                     ref={input => this.hours = input}>
@@ -104,7 +104,7 @@ class CreateEventForm extends React.Component {
                     {timeOfDay}
                   </select>
               </ul>
-              <button className='sign-up-button' onClick={this.handleSubmit}>Create Event</button>
+              <button className='create-button' onClick={this.handleSubmit}>Create Event</button>
             </li>
             <ul>
               {this.props.errors.errors && this.props.errors.errors.length > 0 ? this.renderErrors() : ''}

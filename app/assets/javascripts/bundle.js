@@ -260,7 +260,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var App = function App() {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'main-page' },
     _react2.default.createElement(
       'div',
       { className: 'user' },
@@ -272,14 +272,18 @@ var App = function App() {
       _react2.default.createElement(
         'div',
         null,
-        'Charlie Brown'
+        'Charlie Brown ',
+        _react2.default.createElement('i', { className: 'fas fa-user-circle' })
       )
     ),
     _react2.default.createElement(
       'h1',
       { className: 'heading' },
-      'Spotify Calendario'
+      ' ',
+      _react2.default.createElement('i', { className: 'fab fa-spotify' }),
+      ' Spotify Calendario '
     ),
+    _react2.default.createElement('div', { className: 'line' }),
     _react2.default.createElement(
       'div',
       { className: 'calendar' },
@@ -375,7 +379,7 @@ var CreateEventForm = function (_React$Component) {
     value: function renderErrors() {
       return _react2.default.createElement(
         'ul',
-        { className: 'sign-up-errors' },
+        { className: 'create-errors' },
         this.props.errors.errors.map(function (error, idx) {
           return _react2.default.createElement(
             'li',
@@ -392,7 +396,7 @@ var CreateEventForm = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'sign-up-form' },
+        { className: 'create-form' },
         _react2.default.createElement(
           'h1',
           null,
@@ -401,10 +405,10 @@ var CreateEventForm = function (_React$Component) {
         ),
         _react2.default.createElement(
           'form',
-          { className: 'sign-up-form-form', onSubmit: this.handleSubmit },
+          { className: 'create-form-form', onSubmit: this.handleSubmit },
           _react2.default.createElement(
             'div',
-            { className: 'sign-up-form-names' },
+            { className: 'create-form-description' },
             _react2.default.createElement('input', {
               ref: function ref(input) {
                 return _this3.description = input;
@@ -426,7 +430,7 @@ var CreateEventForm = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'ul',
-                { className: 'sign-up-form-birthdays' },
+                { className: 'create-form-hours' },
                 _react2.default.createElement(
                   'select',
                   {
@@ -462,7 +466,7 @@ var CreateEventForm = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'ul',
-                { className: 'sign-up-form-birthdays' },
+                { className: 'create-form-hours' },
                 _react2.default.createElement(
                   'select',
                   {
@@ -493,7 +497,7 @@ var CreateEventForm = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'button',
-                { className: 'sign-up-button', onClick: this.handleSubmit },
+                { className: 'create-button', onClick: this.handleSubmit },
                 'Create Event'
               )
             ),
@@ -797,21 +801,19 @@ var EventIndex = function (_React$Component) {
             return _react2.default.createElement(
               'div',
               { key: id },
-              'task: ',
-              eventsHash[id].description,
-              ' start_time: ',
-              (0, _date_util.timeGenerator)(eventsHash[id].start_date.slice(12, 16))
+              _react2.default.createElement(
+                'div',
+                { className: 'description' },
+                (0, _date_util.timeGenerator)(eventsHash[id].start_date.slice(12, 16)),
+                '\u25B8 ',
+                eventsHash[id].description
+              )
             );
           });
           if (date.day.theDay <= 7) {
             return _react2.default.createElement(
-              'div',
+              'button',
               { className: 'event-list-item', key: date.day.theDay },
-              _react2.default.createElement(
-                'button',
-                { id: date.day.theDay, onClick: _this2.handleCreate },
-                'Click To Add Event'
-              ),
               _react2.default.createElement(
                 'div',
                 { className: 'date-number' },
@@ -821,17 +823,17 @@ var EventIndex = function (_React$Component) {
                 'div',
                 null,
                 description
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'add-event-button', id: date.day.theDay, onClick: _this2.handleCreate },
+                '+'
               )
             );
           } else {
             return _react2.default.createElement(
-              'div',
+              'button',
               { className: 'event-list-item', key: date.day.theDay },
-              _react2.default.createElement(
-                'button',
-                { id: date.day.theDay, onClick: _this2.handleCreate },
-                'Click To Add Event'
-              ),
               _react2.default.createElement(
                 'div',
                 { className: 'date-number' },
@@ -841,38 +843,43 @@ var EventIndex = function (_React$Component) {
                 'div',
                 null,
                 description
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'add-event-button', id: date.day.theDay, onClick: _this2.handleCreate },
+                '+'
               )
             );
           }
         } else {
           if (date.day.theDay <= 7) {
             return _react2.default.createElement(
-              'div',
+              'button',
               { className: 'event-list-item', key: date.day.theDay },
-              _react2.default.createElement(
-                'button',
-                { id: date.day.theDay, onClick: _this2.handleCreate },
-                'Click To Add Event'
-              ),
               _react2.default.createElement(
                 'div',
                 { className: 'date-number' },
                 date.day.theDay
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'add-event-button', id: date.day.theDay, onClick: _this2.handleCreate },
+                '+'
               )
             );
           } else {
             return _react2.default.createElement(
-              'div',
+              'button',
               { className: 'event-list-item', key: date.day.theDay },
-              _react2.default.createElement(
-                'button',
-                { id: date.day.theDay, onClick: _this2.handleCreate },
-                'Click To Add Event'
-              ),
               _react2.default.createElement(
                 'div',
                 { className: 'date-number' },
                 date.day.theDay
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'add-event-button', id: date.day.theDay, onClick: _this2.handleCreate },
+                '+'
               )
             );
           }
@@ -1390,51 +1397,51 @@ var minutes = exports.minutes = ["00", "15", "30", "45"].map(function (day) {
 var hours = exports.hours = [_react2.default.createElement(
   "option",
   { key: 1, value: 1 },
-  "\"01\""
+  "01"
 ), _react2.default.createElement(
   "option",
   { key: 2, value: 2 },
-  "\"02\""
+  "02"
 ), _react2.default.createElement(
   "option",
   { key: 3, value: 3 },
-  "\"03\""
+  "03"
 ), _react2.default.createElement(
   "option",
   { key: 4, value: 4 },
-  "\"04\""
+  "04"
 ), _react2.default.createElement(
   "option",
   { key: 5, value: 5 },
-  "\"05\""
+  "05"
 ), _react2.default.createElement(
   "option",
   { key: 6, value: 6 },
-  "\"06\""
+  "06"
 ), _react2.default.createElement(
   "option",
   { key: 7, value: 7 },
-  "\"07\""
+  "07"
 ), _react2.default.createElement(
   "option",
   { key: 8, value: 8 },
-  "\"08\""
+  "08"
 ), _react2.default.createElement(
   "option",
   { key: 9, value: 9 },
-  "\"09\""
+  "09"
 ), _react2.default.createElement(
   "option",
   { key: 10, value: 10 },
-  "\"10\""
+  "10"
 ), _react2.default.createElement(
   "option",
   { key: 11, value: 11 },
-  "\"11\""
+  "11"
 ), _react2.default.createElement(
   "option",
   { key: 12, value: 12 },
-  "\"12\""
+  "12"
 )];
 
 var timeGenerator = exports.timeGenerator = function timeGenerator(string) {

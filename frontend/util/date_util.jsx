@@ -72,18 +72,18 @@ export const minutes = [
 
 
 export const hours = [
-  <option key={1} value={1}>"01"</option>,
-  <option key={2} value={2}>"02"</option>,
-  <option key={3} value={3}>"03"</option>,
-  <option key={4} value={4}>"04"</option>,
-  <option key={5} value={5}>"05"</option>,
-  <option key={6} value={6}>"06"</option>,
-  <option key={7} value={7}>"07"</option>,
-  <option key={8} value={8}>"08"</option>,
-  <option key={9} value={9}>"09"</option>,
-  <option key={10} value={10}>"10"</option>,
-  <option key={11} value={11}>"11"</option>,
-  <option key={12} value={12}>"12"</option>
+  <option key={1} value={1}>01</option>,
+  <option key={2} value={2}>02</option>,
+  <option key={3} value={3}>03</option>,
+  <option key={4} value={4}>04</option>,
+  <option key={5} value={5}>05</option>,
+  <option key={6} value={6}>06</option>,
+  <option key={7} value={7}>07</option>,
+  <option key={8} value={8}>08</option>,
+  <option key={9} value={9}>09</option>,
+  <option key={10} value={10}>10</option>,
+  <option key={11} value={11}>11</option>,
+  <option key={12} value={12}>12</option>
 ];
 
 export const timeGenerator = (string) => {

@@ -2,6 +2,27 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.main-page {
+  background-color: #07d159;
+  font-family: proxima_nova,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 10px 10px;
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border: 3px solid black;
+  background-color: black;
+}
+
 .events-list {
   display: flex;
   justify-content: flex-start;
@@ -9,15 +30,36 @@
   margin: 20px;
   max-width: 1300px;
   min-width: 1300px;
-  border: 5px solid green;
-  padding: 10px 10px 10px 50px;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .event-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   border: 5px solid black;
   height: 150px;
   width: 150px;
   padding: 10px 10px 10px 10px;
+  overflow: hidden;
+  font-size: 15px;
+  background-color: lightgray;
+  position: relative;
+}
+
+.add-event-button {
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  bottom: 0.01%;
+  font-size: 30px;
 }
 
 .date-number {
@@ -25,11 +67,6 @@
   font-weight: bold;
 }
 
-.heading {
-  display: flex;
-  justify-content: center;
-  font-size: 100px;
-}
 
 .calendar {
   display: flex;
@@ -39,6 +76,7 @@
 .user {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .user > div {
@@ -47,6 +85,7 @@
 }
 
 .user > div:nth-child(2) {
+  padding: 5px 5px 5px 5px;
   font-weight: bold;
 }
 
@@ -71,11 +110,8 @@
   padding: 10px 10px 10px 10px;
   font-weight: bold;
   font-size: 25px;
-}
-
-.event-list-item > button {
-  display: flex;
-  justify-content: flex-end;
+  color: white;
+  background: black;
 }
 
 .modal-background {
@@ -86,6 +122,7 @@
   left: 0;
   background-color: rgba(0, 0, 0, .1);
   z-index: 10;
+  border-radius: 2.5%;
 }
 
 .modal-child {
@@ -94,10 +131,68 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
 }
 
 .close-x {
   color: grey;
   padding-right: 15px;
   font-size: 16px;
+}
+
+.create-form > h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.other-half-of-form > li {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+select {
+  height: 60px;
+  width: 80px;
+  font-size: 20px;
+}
+
+.create-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 80px;
+  width: 110px;
+  border: 1px solid white;
+  background: black;
+  color: #07d159;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+h5 {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.create-form-description {
+  width: 400px;
+  height: 200px;
+  border: 1px solid black;
+  padding: 4px 4px 4px 8px;
+  border-radius: 2.5%;
+}
+
+.description {
+  font-weight: bold;
+  padding: 5px 5px 5px 5px;
+}
+
+.event-list-item:hover {
+  background-color: pink;
 }

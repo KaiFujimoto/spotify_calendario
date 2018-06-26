@@ -48,6 +48,10 @@
    list-style: none;
  }
 
+ i {
+   padding-right: 20px;
+ }
+
  img {
    display: block;
    width: 100%;

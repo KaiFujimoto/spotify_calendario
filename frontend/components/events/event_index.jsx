@@ -100,40 +100,44 @@ class EventIndex extends React.Component {
         // i just want the weekdays for the first 7 everything else should fall in line
         let description = hashOfEventDays[stringifiedDay].map((id) => {
           return (
-            <div key={id}>task: {eventsHash[id].description} start_time: {timeGenerator(eventsHash[id].start_date.slice(12, 16))}</div>
+            <div key={id}>
+              <div className = "description">
+                {timeGenerator(eventsHash[id].start_date.slice(12, 16))}▸ {eventsHash[id].description}
+              </div>
+            </div>
           );
         });
         if (date.day.theDay <= 7) {
           return (
-            <div className = "event-list-item" key={date.day.theDay}>
-              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
+            <button className = "event-list-item" key={date.day.theDay}>
               <div className = "date-number">{date.day.theDay}</div>
               <div>{description}</div>
-            </div>
+              <button className = "add-event-button" id = {date.day.theDay} onClick={this.handleCreate}>+</button>
+            </button>
           );
         } else {
           return (
-            <div className = "event-list-item" key={date.day.theDay}>
-              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
+            <button className = "event-list-item" key={date.day.theDay}>
               <div className = "date-number">{date.day.theDay}</div>
               <div>{description}</div>
-            </div>
+              <button className = "add-event-button" id = {date.day.theDay} onClick={this.handleCreate}>+</button>
+            </button>
           );
         }
       } else {
         if (date.day.theDay <= 7) {
           return (
-            <div className = "event-list-item" key={date.day.theDay}>
-              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
+            <button className = "event-list-item" key={date.day.theDay}>
               <div className = "date-number">{date.day.theDay}</div>
-            </div>
+              <button className = "add-event-button" id = {date.day.theDay} onClick={this.handleCreate}>+</button>
+            </button>
           );
         } else {
           return (
-            <div className = "event-list-item" key={date.day.theDay}>
-              <button id = {date.day.theDay} onClick={this.handleCreate}>Click To Add Event</button>
+            <button className = "event-list-item" key={date.day.theDay}>
               <div className = "date-number">{date.day.theDay}</div>
-            </div>
+              <button className = "add-event-button" id = {date.day.theDay} onClick={this.handleCreate}>+</button>
+            </button>
           );
         }
       }
@@ -147,14 +151,14 @@ class EventIndex extends React.Component {
     });
     return (
       <div>
-        <h1 className = "events-list">{monthName} {year}</h1>
-        <Modal event={events} eventHash={this.props.eventsHash}/>
-        <div className = "events-list">
-          <div className = "day-of-the-week-names">
-            {daysOfWeekNamesArray}
+          <h1 className = "events-list">{monthName} {year}</h1>
+          <Modal event={events} eventHash={this.props.eventsHash}/>
+          <div className = "events-list">
+            <div className = "day-of-the-week-names">
+              {daysOfWeekNamesArray}
+            </div>
+            {monthsList}
           </div>
-          {monthsList}
-        </div>
       </div>
     );
   }

@@ -10,12 +10,13 @@ import {
 import EventIndexContainer from './events/event_index_container';
 
 const App = () => (
-  <div>
+  <div className = "main-page">
     <div className = "user">
       <div>Welcome!</div>
-      <div>Charlie Brown</div>
+      <div>Charlie Brown <i className="fas fa-user-circle"></i></div>
     </div>
-    <h1 className = "heading">Spotify Calendario</h1>
+    <h1 className = "heading"> <i className="fab fa-spotify"></i> Spotify Calendario </h1>
+    <div className = "line"></div>
     <div className = "calendar">
       <EventIndexContainer />
     </div>
