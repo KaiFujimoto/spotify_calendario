@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a calendar that can store events on it.
+It is hard-coded to June 2018.
 
-Things you may want to cover:
+To use this file, download it and open up terminal.
 
-* Ruby version
+- In terminal go to the root directory of the file and run: bundle install and npm install
 
-* System dependencies
+- Next, type in ```rails s``` and hit ```enter```.
 
-* Configuration
+- Open a new tab and type in: ```webpack -w```.
 
-* Database creation
+- Finally, navigate in your browser to localhost:3000 and the calendar should appear.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- If this doesn't work, please email: kaichen@kai-sophia-chen.com
